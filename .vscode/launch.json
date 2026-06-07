@@ -2,22 +2,19 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Launch Django Backend",
-      "type": "python",
+      "name": "Launch OctoFit Backend",
+      "type": "node",
       "request": "launch",
-      "program": "${workspaceFolder}/octofit-tracker/backend/manage.py",
-      "args": ["runserver", "0.0.0.0:8000"],
-      "django": true,
-      "justMyCode": true,
-      "python": "${workspaceFolder}/octofit-tracker/backend/venv/bin/python",
+      "cwd": "${workspaceFolder}/octofit-tracker/backend",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["--loader", "ts-node/esm", "src/server.ts"],
       "env": {
-        "PYTHONPATH": "${workspaceFolder}/octofit-tracker/backend/venv/bin/python",
-        "VIRTUAL_ENV": "${workspaceFolder}/octofit-tracker/backend/venv",
-        "PATH": "${workspaceFolder}/octofit-tracker/backend/venv/bin:${env:PATH}"
-      }
+        "PORT": "8000"
+      },
+      "console": "integratedTerminal"
     },
     {
-      "name": "Launch Vite Frontend",
+      "name": "Launch OctoFit Frontend",
       "type": "node",
       "request": "launch",
       "cwd": "${workspaceFolder}/octofit-tracker/frontend",
@@ -29,10 +26,13 @@
         "--host",
         "0.0.0.0"
       ],
-      "port": 5173,
-      "env": {
-        "VITE_CODESPACE_NAME": "${env:CODESPACE_NAME}"
-      }
+      "console": "integratedTerminal"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Launch OctoFit Full Stack",
+      "configurations": ["Launch OctoFit Backend", "Launch OctoFit Frontend"]
     }
   ]
 }

@@ -1,14 +1,12 @@
+import cors from 'cors'
 import express from 'express'
 import { connectDatabase, mongoUri } from './config/database.js'
 import { Activity, Leaderboard, Team, User, Workout } from './models.js'
 
 const app = express()
 const port = Number(process.env.PORT ?? 8000)
-const codespaceName = process.env.CODESPACE_NAME
-const apiUrl = codespaceName
-  ? `https://${codespaceName}-8000.app.github.dev`
-  : `http://localhost:${port}`
 
+app.use(cors())
 app.use(express.json())
 
 app.get('/health', (_req, res) => {
@@ -44,7 +42,7 @@ const startServer = async () => {
   try {
     await connectDatabase()
     console.log('Connected to MongoDB at', mongoUri)
-    console.log(`Backend running on ${apiUrl}`)
+    console.log(`Backend running on http://localhost:${port}`)
     app.listen(port, () => {
       console.log(`Listening on port ${port}`)
     })
